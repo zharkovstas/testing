@@ -48,7 +48,11 @@
 
         var res = snapshot.val();
         res = res ? res : [];
-        var names = Object.keys(res).filter(k => res[k].implementations);
+        var banned = [/GodOfTests/, /navalnyi/, /Firebase сломался/, /IsItWorks/, /SQL Инъекции/, /сделал/, /([а-я]{1,3}\s?)+/]
+        var whitelist = [ /Prokofyev Lyubashov/, /Sanya Danya/, /Dima Nikita/, /Denis Sergey/, /Balanda Voronin/, /Nikita/, /Sanya/, /chvvn/, /Шереметь/ ]
+        var names = Object.keys(res)
+        .filter(k => res[k].implementations && (!banned.some(x => x.test(k)) &&  !Object.keys(res[k].implementations).some(a => !Number.isInteger(res[k].implementations[a]) || res[k].implementations[a] > 30) || whitelist.some(x => x.test(k))));
+        
         names.sort((a, b) => {
             return -countNonZero(res[a].implementations) + countNonZero(res[b].implementations)
                 || countFailedTests(res[a].implementations) - countFailedTests(res[b].implementations)
