@@ -53,13 +53,6 @@
 			return this;
 		}
 
-		public TestUserBuilder But() => 
-			AUser()
-				.InRole(role)
-				.WithName(name)
-				.WithPassword(password)
-				.WithLogin(login);
-
 		public User Build() => new User(name, login, password, role);
 
 		public static User ARegularUser() => AUser().Build();
